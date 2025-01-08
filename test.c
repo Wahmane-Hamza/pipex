@@ -19,6 +19,7 @@ int main()
     int id = fork();
     int id2 = fork();
 
+
     if (id == 0)
     {
         printf("child 0\n");
