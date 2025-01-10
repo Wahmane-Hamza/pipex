@@ -13,27 +13,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
+#include <sys/wait.h>
 
 int main()
 {
     int id = fork();
-    int id2 = fork();
-
+    int i;
+    int j;
 
     if (id == 0)
-    {
-        printf("child 0\n");
-        if (id2 == 0)
-            printf("child 01\n");
-        else if (id2 > 0)
-            printf("child 001\n");
-    }
+        i = 1;
     else
+        i = 5;
+
+    wait(NULL);
+    
+    j = i;
+    while (i < j + 5)
     {
-        printf("parent \n");
-        if (id2 == 0)
-            printf("child 02\n");
-        else if (id2 > 0)
-            printf("child 002\n");
+        printf(" %d",i);
+        fflush(stdout);
+        i++;
     }
+    printf("\n");
+    
+
 }
