@@ -1,43 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 12:09:27 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/10 15:26:12 by hwahmane         ###   ########.fr       */
+/*   Created: 2025/01/12 18:09:16 by hwahmane          #+#    #+#             */
+/*   Updated: 2025/01/12 18:09:18 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/wait.h>
+#include "libft.h"
 
-int main()
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-    int id = fork();
-    int i;
-    int j;
+	size_t	i;
+	size_t	j;
 
-    if (id == 0)
-        i = 1;
-    else
-        i = 5;
-
-    wait(NULL);
-
-
-    j = i;
-    while (i < j + 5)
-    {
-        printf(" %d",i);
-        fflush(stdout);
-        i++;
-    }
-    printf("\n");
-    
-
+	j = ft_strlen(src);
+	if (dstsize == 0 || !dst)
+		return (j);
+	i = 0;
+	while (i < dstsize - 1 && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (j);
 }
