@@ -1,5 +1,5 @@
 PROG = pipex
-SRCS = pipex.c
+SRCS = pipex.c commands_help.c commands_help2.c
 OBJS = $(SRCS:.c=.o)
 HEADER = -I.
 DEPS = pipex.h
@@ -10,20 +10,17 @@ all: $(PROG)
 
 $(PROG): $(OBJS)
 	@make -C libft
-	@make -C Printf
-	@$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -LPrintf -lftprintf -o $(PROG)
+	@$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(PROG)
 
 %.o: %.c $(DEPS)
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 clean:
 	@make clean -C libft
-	@make clean -C Printf
 	@rm -f $(OBJS)
 
 fclean: clean
 	@make fclean -C libft
-	@make fclean -C Printf
 	@rm -f $(PROG)
 
 re: fclean all

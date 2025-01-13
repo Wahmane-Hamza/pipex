@@ -6,15 +6,15 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:32 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 17:06:57 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/13 21:00:37 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *copy_str(char *str)
+char	*copy_str(char *str)
 {
-	char *str2;
+	char	*str2;
 	int		i;
 
 	if (!str)
@@ -22,9 +22,7 @@ char *copy_str(char *str)
 	i = 0;
 	while (str[i] && str[i] != ' ')
 		i++;
-	
 	str2 = malloc(i + 1);
-
 	i = 0;
 	while (str[i] && str[i] != ' ')
 	{

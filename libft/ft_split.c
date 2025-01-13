@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:49:40 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/12 18:00:37 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/13 20:59:46 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	**free_array(char **array, int j)
 		j--;
 		free(array[j]);
 	}
-	free (array);
+	free(array);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 18:47:21 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/12 18:47:23 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/13 21:00:05 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char		*ptr;
-	size_t		len;
+	char	*ptr;
+	size_t	len;
 
 	if (s1 && !s2)
 		return (ft_strdup(s1));
