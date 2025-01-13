@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:32 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/12 18:00:42 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:06:57 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,19 @@ char *copy_str(char *str)
 	return (str2);
 }
 
-int	ft_strncmp(char *s1,char s2)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	if (!s1)
+	size_t	i;
+
+	if (n == 0)
 		return (0);
-	if (s1[0] != s2)
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0')
 	{
-		return (1);
+		if (i < (n - 1))
+			i++;
+		else
+			return (0);
 	}
-	return (0);
+	return ((unsigned char)(s1[i]) - (unsigned char)(s2[i]));
 }

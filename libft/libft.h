@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:52:30 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/12 18:48:39 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:07:40 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 char    *copy_str(char *str);
-int	    ft_strncmp(char *s1,char s2);
+int     ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+void	ft_putstr_fd(char *s, int fd);
 
 # endif

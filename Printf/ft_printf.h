@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 16:55:50 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/12/05 11:48:19 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/12/06 17:53:12 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include "./libft/libft.h"
-#include "./Printf/ft_printf.h"
+# include <stdarg.h>
+# include <stddef.h>
+# include <stdio.h>
+# include <unistd.h>
 
-# endif
+int	ft_printf(const char *format, ...);
+int	ft_print_char(int c);
+int	ft_print_str(char *str);
+int	ft_print_nbr(int nbr);
+int	ft_print_unsig_nbr(unsigned int n);
+int	ft_print_hexa(unsigned long nbr, char *base);
+int	ft_print_ptr(void *n);
+
+#endif

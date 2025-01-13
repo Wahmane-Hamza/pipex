@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_print_nbr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 16:55:50 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/12/05 14:03:37 by hwahmane          #+#    #+#             */
+/*   Updated: 2024/12/05 16:41:03 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "ft_printf.h"
 
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include "./libft/libft.h"
-#include "./Printf/ft_printf.h"
+int	ft_print_nbr(int nbr)
+{
+	long	n;
+	int		count;
 
-# endif
+	n = nbr;
+	count = 0;
+	if (n < 0)
+	{
+		count += ft_print_char('-');
+		n = -n;
+	}
+	if (n >= 10)
+		count += ft_print_nbr(n / 10);
+	count += ft_print_char(n % 10 + 48);
+	return (count);
+}
