@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:31:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 20:53:54 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/13 21:25:54 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	second_child(int *fd, char **av, char **env)
 	commands = ft_split(av[3], ' ');
 	if (!commands)
 		ft_write(NULL, "Memory allocation failed", 1);
-	check_arg(av[2], commands, env);
+	check_arg(av[3], commands, env);
 	path = take_path(commands, commands[0], env);
 	if (!path)
 		ft_write(commands, ": Command not found", 1);

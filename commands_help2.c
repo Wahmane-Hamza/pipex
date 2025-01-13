@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:40:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 20:53:26 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/13 21:18:42 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,7 @@ void	check_arg(char *av, char **commands, char **env)
 	while (av[i])
 	{
 		if (av[i] == '/')
-		{
 			ft_write(commands, ": No such file or directory", 1);
-			break ;
-		}
 		i++;
 	}
 }
