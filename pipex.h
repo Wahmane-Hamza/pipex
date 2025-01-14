@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 20:54:10 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:46:41 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ char	*get_path(char **paths, char *command);
 char	*take_path(char **commands, char *command, char **env);
 void	ft_free(char **get_free);
 void	check_arg(char *av, char **commands, char **env);
-void	ft_write(char **commands, char *signal, int ft_exit);
+void	ft_write(char **commands, char *path, char *signal, int ft_exit);
 
 #endif
