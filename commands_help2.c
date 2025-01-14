@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:40:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 21:18:42 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:46:22 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ char	*get_path(char **paths, char *command)
 		path = ft_strjoin(part_path, command);
 		free(part_path);
 		if (path && access(path, F_OK | X_OK) == 0)
-			break ;
+			return (path);
 		free(path);
 		path = NULL;
 		i++;
 	}
-	return (path);
+	free(path);
+	return (NULL);
 }
 
 char	*take_path(char **commands, char *command, char **env)
@@ -43,7 +44,7 @@ char	*take_path(char **commands, char *command, char **env)
 	while (env[++i] && ft_strnstr(env[i], "PATH", 4) == 0)
 		;
 	if (!env[i])
-		ft_write(commands, ": No such file or directory", 1);
+		ft_write(commands, NULL, ": No such file or directory", 1);
 	paths = ft_split(env[i] + 5, ':');
 	if (!paths)
 		return (NULL);
@@ -82,19 +83,19 @@ void	check_arg(char *av, char **commands, char **env)
 	{
 		if (execve(commands[0], commands, env) == -1)
 		{
-			ft_write(commands, ": No such file or directory", 1);
+			ft_write(commands, NULL, ": No such file or directory", 1);
 		}
 	}
 	i = 1;
 	while (av[i])
 	{
 		if (av[i] == '/')
-			ft_write(commands, ": No such file or directory", 1);
+			ft_write(commands, NULL, ": No such file or directory", 1);
 		i++;
 	}
 }
 
-void	ft_write(char **commands, char *signal, int ft_exit)
+void	ft_write(char **commands, char *path, char *signal, int ft_exit)
 {
 	if (*commands)
 		write(2, commands[0], ft_strlen(commands[0]));
@@ -104,6 +105,8 @@ void	ft_write(char **commands, char *signal, int ft_exit)
 	{
 		if (commands)
 			ft_free(commands);
+		if (path)
+			free(path);
 		exit(1);
 	}
 }
