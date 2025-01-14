@@ -10,8 +10,8 @@ all: $(PROG)
 
 $(PROG): $(OBJS)
 	@make -C libft
-	@$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(PROG)
-
+	@$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(PROG) 	
+#-fsanitize=address 
 %.o: %.c $(DEPS)
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
