@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:31:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 21:25:54 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:46:08 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ void	first_child(int *fd, char **av, char **env)
 		failed_dup2(fd, 1, infile);
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
 		failed_dup2(fd, 1, infile);
+	close(infile);
 	close(fd[1]);
 	commands = ft_split(av[2], ' ');
 	if (!commands)
-		ft_write(NULL, "Memory allocation failed", 1);
+		ft_write(NULL, NULL, "Memory allocation failed", 1);
 	check_arg(av[2], commands, env);
 	path = take_path(commands, commands[0], env);
 	if (!path)
-		ft_write(commands, ": Command not found", 1);
+		ft_write(commands, NULL, ": Command not found", 1);
 	if (execve(path, commands, env) == -1)
-		ft_write(commands, ": No such file or directory", 1);
-	ft_free(commands);
+		ft_write(commands, path, ": No such file or directory", 1);
 }
 
 // SECOND_CHILD
@@ -55,17 +55,17 @@ void	second_child(int *fd, char **av, char **env)
 		failed_dup2(fd, 0, outfile);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		failed_dup2(fd, 0, outfile);
+	close(outfile);
 	close(fd[0]);
 	commands = ft_split(av[3], ' ');
 	if (!commands)
-		ft_write(NULL, "Memory allocation failed", 1);
+		ft_write(NULL, NULL, "Memory allocation failed", 1);
 	check_arg(av[3], commands, env);
 	path = take_path(commands, commands[0], env);
 	if (!path)
-		ft_write(commands, ": Command not found", 1);
+		ft_write(commands, NULL, ": Command not found", 1);
 	if (execve(path, commands, env) == -1)
-		ft_write(commands, ": No such file or directory", 1);
-	ft_free(commands);
+		ft_write(commands, path, ": No such file or directory", 1);
 }
 
 int	main(int ac, char **av, char **env)
