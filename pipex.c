@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:31:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/14 14:54:53 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:22:51 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	first_child(int *fd, char **av, char **env)
 
 	infile = open(av[1], O_RDONLY);
 	if (infile == -1)
-		open_faild(fd);
+		open_faild(fd, av[1]);
 	close(fd[0]);
 	if (dup2(infile, STDIN_FILENO) == -1)
 		failed_dup2(fd, 1, infile);
@@ -49,7 +49,7 @@ void	second_child(int *fd, char **av, char **env)
 
 	outfile = open(av[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (outfile == -1)
-		open_faild(fd);
+		open_faild(fd, NULL);
 	close(fd[1]);
 	if (dup2(outfile, STDOUT_FILENO) == -1)
 		failed_dup2(fd, 0, outfile);
@@ -94,5 +94,5 @@ int	main(int ac, char **av, char **env)
 		waitpid(id2, NULL, 0);
 	}
 	else
-		input_error();
+		input_error("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n");
 }

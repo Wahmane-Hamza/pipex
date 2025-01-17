@@ -6,97 +6,69 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/17 17:42:09 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:48:21 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-int	openfile (char *filename, int mode)
+int	openfile(char *filename, int mode)
 {
 	if (mode == INFILE)
 	{
 		if (access(filename, F_OK))
 		{
-			write(STDERR, "pipex: ", 7);
-			write(STDERR, filename, str_ichr(filename, 0));
-			write(STDERR, ": No such file or directory\n", 28);
-			return (STDIN);	
+			write(2, filename, ft_strlen(filename));
+			write(2, ": No such file or directory", 27);
+			write(2, "\n", 1);
+			exit(1);
 		}
 		return (open(filename, O_RDONLY));
 	}
 	else
-		return (open(filename, O_CREAT | O_WRONLY | O_TRUNC , 0644));
-}
-
-char	*getPath (char *cmd, char **env)
-{
-	char	*path;
-	char	*dir;
-	char	*bin;
-	int		i;
-
-	i = 0;
-	while (env[i] && str_ncmp(env[i], "PATH=", 5))
-		i++;
-	if (!env[i])
-		return (cmd);
-	path = env[i] + 5;
-	while (path && str_ichr(path, ':') > -1)
-	{
-		dir = str_ndup(path, str_ichr(path, ':'));
-		bin = path_join(dir, cmd);
-		free(dir);
-		if (access(bin, F_OK) == 0)
-			return (bin);
-		free(bin);
-		path += str_ichr(path, ':') + 1;
-	}
-	return (cmd);
+		return (open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644));
 }
 
 void	exec(char *cmd, char **env)
 {
-	char	**args;
+	char	**commands;
 	char	*path;
 
-	args = str_split(cmd, ' ');
-	if (str_ichr(args[0], '/') > -1)
-		path = args[0];
-	else
-		path = getPath(args[0], env);
-	execve(path, args, env);
-	write(STDERR, "pipex: ", 7);
-	write(STDERR, cmd, str_ichr(cmd, 0));
-	write(STDERR, ": command not found\n", 20);
-	exit(127);
+	commands = ft_split(cmd, ' ');
+	if (!commands)
+		ft_write(NULL, NULL, "Memory allocation failed", 1);
+	check_arg(cmd, commands, env);
+	path = take_path(commands, commands[0], env);
+	if (!path)
+		ft_write(commands, NULL, ": Command not found", 1);
+	execve(path, commands, env);
+	ft_write(commands, path, ": No such file or directory", 1);
 }
 
-void	redir (char *cmd, char **env, int fdin)
+void	redir(char *cmd, char **env)
 {
-		pid_t	pid;
-		int		pipefd[2];
+	pid_t	pid;
+	int		pipefd[2];
 
-		pipe(pipefd);
-		pid = fork();
-		if (pid)
-		{
-			close(pipefd[1]);
-			dup2(pipefd[0], STDIN);
-			waitpid(pid, NULL, 0);
-		}
-		else
-		{
-			close(pipefd[0]);
-			dup2(pipefd[1], STDOUT);
-			if (fdin == STDIN)
-				exit(1);
-			else
-				exec(cmd, env);
-		}
+	pipe(pipefd);
+	pid = fork();
+	if (pid)
+	{
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN);
+		close(pipefd[0]);
+		waitpid(pid, NULL, 0);
+	}
+	else
+	{
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT);
+		close(pipefd[1]);
+		exec(cmd, env);
+	}
 }
 
-int	main (int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	int	fdin;
 	int	fdout;
@@ -109,12 +81,14 @@ int	main (int ac, char **av, char **env)
 		fdout = openfile(av[ac - 1], OUTFILE);
 		dup2(fdin, STDIN);
 		dup2(fdout, STDOUT);
-		redir(av[2], env, fdin);
+		close(fdin);
+		close(fdout);
+		redir(av[2], env);
 		while (i < ac - 2)
-			redir(av[i++], env, 1);
+			redir(av[i++], env);
 		exec(av[i], env);
 	}
 	else
-		write(STDERR, "Invalid number of arguments.\n", 29);
+		input_error("Ex: ./pipex <file1> <cmd1> <cmd2> ... <cmdn> <file2>\n");
 	return (1);
 }

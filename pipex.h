@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/14 14:46:41 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:25:11 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 void	failed_dup2(int *fd, int pipe, int file);
 void	failed_fork(int *fd);
 void	failed_pipe(void);
-void	input_error(void);
-void	open_faild(int *fd);
+void	input_error(char *arg_ex);
+void	open_faild(int *fd, char *command);
 
 // commands_help2
 char	*get_path(char **paths, char *command);

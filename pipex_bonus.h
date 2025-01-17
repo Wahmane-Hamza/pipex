@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/14 15:18:10 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:29:13 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-    
+
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
@@ -33,11 +29,18 @@
 # define INFILE 0
 # define OUTFILE 1
 
-char	*path_join (char *path, char *bin);
-int		str_ncmp (char *str1, char *str2, int n);
-int		str_ichr (char *str, char c);
-char	*str_ndup (char *str, unsigned int n);
-char	**str_split (char *str, char sep);
+// commands_help
+void	failed_dup2(int *fd, int pipe, int file);
+void	failed_fork(int *fd);
+void	failed_pipe(void);
+void	input_error(char *arg_ex);
+void	open_faild(int *fd, char *command);
 
+// commands_help2
+char	*get_path(char **paths, char *command);
+char	*take_path(char **commands, char *command, char **env);
+void	ft_free(char **get_free);
+void	check_arg(char *av, char **commands, char **env);
+void	ft_write(char **commands, char *path, char *signal, int ft_exit);
 
 #endif

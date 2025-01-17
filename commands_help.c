@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:39:01 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 20:45:21 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:25:03 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,21 @@ void	failed_pipe(void)
 	exit(1);
 }
 
-void	input_error(void)
+void	input_error(char *arg_ex)
 {
 	ft_putstr_fd("Bad arguments\n", 2);
-	ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n", 1);
+	ft_putstr_fd(arg_ex, 2);
 }
 
-void	open_faild(int *fd)
+void	open_faild(int *fd, char *command)
 {
 	close(fd[1]);
 	close(fd[0]);
-	perror("failed to open fd");
+	if (command)
+	{
+		write(2, command, ft_strlen(command));
+		write(2, ": No such file or directory", 27);
+		write(2, "\n", 1);
+	}
 	exit(1);
 }
