@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/16 16:20:52 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/17 17:42:09 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	openfile (char *filename, int mode)
 			write(STDERR, "pipex: ", 7);
 			write(STDERR, filename, str_ichr(filename, 0));
 			write(STDERR, ": No such file or directory\n", 28);
-			return (STDIN);
+			return (STDIN);	
 		}
 		return (open(filename, O_RDONLY));
 	}
@@ -55,7 +55,7 @@ char	*getPath (char *cmd, char **env)
 	return (cmd);
 }
 
-void	exec (char *cmd, char **env)
+void	exec(char *cmd, char **env)
 {
 	char	**args;
 	char	*path;
@@ -74,26 +74,26 @@ void	exec (char *cmd, char **env)
 
 void	redir (char *cmd, char **env, int fdin)
 {
-	pid_t	pid;
-	int		pipefd[2];
+		pid_t	pid;
+		int		pipefd[2];
 
-	pipe(pipefd);
-	pid = fork();
-	if (pid)
-	{
-		close(pipefd[1]);
-		dup2(pipefd[0], STDIN);
-		waitpid(pid, NULL, 0);
-	}
-	else
-	{
-		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT);
-		if (fdin == STDIN)
-			exit(1);
+		pipe(pipefd);
+		pid = fork();
+		if (pid)
+		{
+			close(pipefd[1]);
+			dup2(pipefd[0], STDIN);
+			waitpid(pid, NULL, 0);
+		}
 		else
-			exec(cmd, env);
-	}
+		{
+			close(pipefd[0]);
+			dup2(pipefd[1], STDOUT);
+			if (fdin == STDIN)
+				exit(1);
+			else
+				exec(cmd, env);
+		}
 }
 
 int	main (int ac, char **av, char **env)
