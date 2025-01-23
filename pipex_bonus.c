@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 19:53:29 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/23 21:04:45 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	openfile(char *filename, int mode)
 	{
 		if (access(filename, F_OK))
 		{
+			write(2, "cannot open ", 12);
 			write(2, filename, ft_strlen(filename));
-			write(2, ": No such file or directory", 27);
+			write(2, ": No such file", 14);
 			write(2, "\n", 1);
 			exit(1);
 		}
