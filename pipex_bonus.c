@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 21:04:45 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/23 21:11:06 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	exec(char *cmd, char **env)
 	check_arg(cmd, commands, env);
 	path = take_path(commands, commands[0], env);
 	if (!path)
-		ft_write(commands, NULL, ": Command not found", 1);
+		ft_write(commands, NULL, ": not found", 1);
 	execve(path, commands, env);
 	ft_write(commands, path, ": No such file or directory", 1);
 }
