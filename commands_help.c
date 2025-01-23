@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:39:01 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 15:18:40 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/23 21:03:10 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ void	open_faild(int *fd, char *command)
 	close(fd[0]);
 	if (command)
 	{
+		write(2, "cannot open ", 12);
 		write(2, command, ft_strlen(command));
-		write(2, ": No such file or directory", 27);
+		write(2, ": No such file", 14);
 		write(2, "\n", 1);
 	}
 	exit(1);
