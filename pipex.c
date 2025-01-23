@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:31:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 19:05:05 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/23 21:08:30 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	first_child(int *fd, char **av, char **env)
 	check_arg(av[2], commands, env);
 	path = take_path(commands, commands[0], env);
 	if (!path)
-		ft_write(commands, NULL, ": Command not found", 1);
+		ft_write(commands, NULL, ": not found", 1);
 	if (execve(path, commands, env) == -1)
 		ft_write(commands, path, ": No such file or directory", 1);
 }
@@ -63,7 +63,7 @@ void	second_child(int *fd, char **av, char **env)
 	check_arg(av[3], commands, env);
 	path = take_path(commands, commands[0], env);
 	if (!path)
-		ft_write(commands, NULL, ": Command not found", 1);
+		ft_write(commands, NULL, ": not found", 1);
 	if (execve(path, commands, env) == -1)
 		ft_write(commands, path, ": No such file or directory", 1);
 }
