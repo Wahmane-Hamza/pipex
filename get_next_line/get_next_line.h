@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/12 18:47:21 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 15:29:25 by hwahmane         ###   ########.fr       */
+/*   Created: 2024/12/12 16:14:57 by hwahmane          #+#    #+#             */
+/*   Updated: 2025/01/23 15:35:52 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*ptr;
-	size_t	len;
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "../libft/libft.h"
 
-	if (s1 && !s2)
-		return (ft_strdup(s1));
-	if (!s1 && s2)
-		return (ft_strdup(s2));
-	if (!s1 && !s2)
-		return (ft_strdup(""));
-	len = (ft_strlen(s1) + ft_strlen(s2)) + 1;
-	ptr = (char *)malloc(len);
-	if (!ptr)
-		return (NULL);
-	ft_strlcpy(ptr, s1, len);
-	ft_strlcat(ptr, s2, len);
-	return (ptr);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
+
+char	*get_next_line(int fd);
+int		ft_strchr(const char *s, int c);
+int		before_n_stack(char *stack);
+int		after_n_stack(char *stack, int i);
+
+#endif

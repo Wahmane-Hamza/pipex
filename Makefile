@@ -2,7 +2,10 @@ NAME = pipex
 BNAME = pipex_bonus
 
 SRCS = pipex.c commands_help.c commands_help2.c
-SRCB = pipex_bonus.c commands_help.c commands_help2.c
+SRCB = pipex_bonus.c commands_help.c commands_help2.c \
+		commands_bonus.c \
+		./get_next_line/get_next_line.c \
+		./get_next_line/get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)
 OBJSB = $(SRCB:.c=.o)

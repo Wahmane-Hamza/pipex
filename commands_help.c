@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:39:01 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/21 10:07:04 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:18:40 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	input_error(char *arg_ex)
 {
 	ft_putstr_fd("Bad arguments\n", 2);
 	ft_putstr_fd(arg_ex, 2);
+	exit(1);
 }
 
 void	open_faild(int *fd, char *command)

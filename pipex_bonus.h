@@ -6,13 +6,14 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/17 18:29:13 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:53:58 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
 
+# include "./get_next_line/get_next_line.h"
 # include "./libft/libft.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -22,12 +23,22 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
+# define STDIN STDIN_FILENO
+# define STDOUT STDOUT_FILENO
+# define STDERR STDERR_FILENO
 
 # define INFILE 0
 # define OUTFILE 1
+
+// pipex_bonus
+int		openfile(char *filename, int mode);
+void	exec(char *cmd, char **env);
+void	redir(char *cmd, char **env);
+void	redir2(char *cmd, char **env);
+
+// commands_bonus
+void	here_doc(int ac, char **av, char **env);
+void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env);
 
 // commands_help
 void	failed_dup2(int *fd, int pipe, int file);
