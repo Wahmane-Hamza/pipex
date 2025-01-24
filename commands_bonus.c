@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_help3.c                                   :+:      :+:    :+:   */
+/*   commands_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:40:18 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 13:51:47 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:20:28 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void	close_pipes(int *pipes)
+{
+	close(pipes[0]);
+	close(pipes[1]);
+	exit(1);
+}
 
 void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env)
 {
@@ -41,7 +48,7 @@ void	here_doc(int ac, char **av, char **env)
 			write(1, ">", 1);
 			line = get_next_line(0);
 			if (!line)
-				exit(1);
+				close_pipes(pipe_fd);
 			if (ft_strncmp(line, av[2], ft_strlen(av[2])) == 0
 				&& line[ft_strlen(av[2])] == '\n')
 				break ;
@@ -54,4 +61,3 @@ void	here_doc(int ac, char **av, char **env)
 	else
 		input_error("Ex: ./pipex here_doc LIMITER cmd cmd1 file\n");
 }
-

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 13:45:12 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:28:14 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec(char *cmd, char **env)
 	char	**commands;
 	char	*path;
 
-	check(cmd);
+	check(cmd, NULL);
 	commands = ft_split(cmd, ' ');
 	if (!commands)
 		ft_write(NULL, NULL, "Memory allocation failed", 1);
@@ -78,6 +78,7 @@ void	redir2(char *cmd, char **env)
 	pid_t	pid;
 	int		pipefd[2];
 
+	
 	if (pipe(pipefd) == -1)
 		failed_pipe();
 	pid = fork();
@@ -93,6 +94,7 @@ void	redir2(char *cmd, char **env)
 	else
 	{
 		close(pipefd[0]);
+		close(pipefd[1]);
 		exec(cmd, env);
 	}
 }

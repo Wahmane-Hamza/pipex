@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 13:52:36 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:27:54 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	check_arg(char *av, char **commands, char **env);
 void	ft_write(char **commands, char *path, char *signal, int ft_exit);
 
 // check
-void	check(char *cmd);
+void	check(char *cmd, int *fd);
 
 #endif

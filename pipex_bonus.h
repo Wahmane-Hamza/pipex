@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 13:52:48 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:28:02 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	here_doc(int ac, char **av, char **env);
 void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env);
 
 //check
-void	check(char *cmd);
+void	check(char *cmd, int *fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:31:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 13:50:34 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:28:34 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	first_child(int *fd, char **av, char **env)
 	char	*path;
 	int		infile;
 
-	check(av[2]);
+	check(av[2], fd);
 	infile = open(av[1], O_RDONLY);
 	if (infile == -1)
 		open_faild(fd, av[1]);
@@ -48,7 +48,7 @@ void	second_child(int *fd, char **av, char **env)
 	char	*path;
 	int		outfile;
 
-	check(av[3]);
+	check(av[3], fd);
 	outfile = open(av[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (outfile == -1)
 		open_faild(fd, NULL);
