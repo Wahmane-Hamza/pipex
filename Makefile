@@ -13,7 +13,7 @@ OBJSB = $(SRCB:.c=.o)
 HEADER = -I.
 DEPS = pipex.h
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 all: $(NAME)
 
@@ -36,7 +36,7 @@ clean:
 
 fclean: clean
 	@make fclean -C libft
-	@rm -f $(NAME) $(BNAME)
+	@rm -rf $(NAME) $(BNAME)
 
 re: fclean all
 

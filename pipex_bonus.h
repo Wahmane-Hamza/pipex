@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 14:28:02 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 20:52:34 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <errno.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -53,6 +54,7 @@ void	ft_write(char **commands, char *path, char *signal, int ft_exit);
 // commands_bonus
 void	here_doc(int ac, char **av, char **env);
 void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env);
+void	open_file(char **av, int ac);
 
 //check
 void	check(char *cmd, int *fd);

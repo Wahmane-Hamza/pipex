@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:40:18 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 14:57:06 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 21:02:03 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env)
 	dup2(pipe_fd[0], STDIN);
 	close(pipe_fd[0]);
 	fdout = openfile(av[ac - 1], OUTFILE);
-	dup2(fdout, STDOUT);
+	if (fdout == -1)
+		exit(1);
+	if (dup2(fdout, STDOUT) == -1)
+		exit(1);
 	close(fdout);
 	redir(av[3], env);
 	redir2(av[4], env);
@@ -60,4 +63,23 @@ void	here_doc(int ac, char **av, char **env)
 	}
 	else
 		input_error("Ex: ./pipex here_doc LIMITER cmd cmd1 file\n");
+}
+
+void	open_file(char **av, int ac)
+{
+	int	fdin;
+	int	fdout;
+
+	fdin = openfile(av[1], INFILE);
+	if (fdin == -1)
+		exit(1);
+	if (dup2(fdin, STDIN) == -1)
+		exit(1);
+	close(fdin);
+	fdout = openfile(av[ac - 1], OUTFILE);
+	if (fdout == -1)
+		exit(1);
+	if (dup2(fdout, STDOUT) == -1)
+		exit(1);
+	close(fdout);
 }

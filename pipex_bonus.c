@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 14:28:14 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 20:52:01 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,14 @@ int	openfile(char *filename, int mode)
 		return (open(filename, O_RDONLY));
 	}
 	else
+	{
+		if (access(filename, W_OK) == -1)
+		{
+			write(2, strerror(errno), ft_strlen(strerror(errno)));
+			write(2, "\n", 1);
+		}
 		return (open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644));
+	}
 }
 
 void	exec(char *cmd, char **env)
@@ -62,7 +69,6 @@ void	redir(char *cmd, char **env)
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN);
 		close(pipefd[0]);
-		waitpid(pid, NULL, 0);
 	}
 	else
 	{
@@ -78,7 +84,6 @@ void	redir2(char *cmd, char **env)
 	pid_t	pid;
 	int		pipefd[2];
 
-	
 	if (pipe(pipefd) == -1)
 		failed_pipe();
 	pid = fork();
@@ -89,7 +94,6 @@ void	redir2(char *cmd, char **env)
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN);
 		close(pipefd[0]);
-		waitpid(pid, NULL, 0);
 	}
 	else
 	{
@@ -101,8 +105,6 @@ void	redir2(char *cmd, char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	int	fdin;
-	int	fdout;
 	int	i;
 
 	i = 3;
@@ -110,16 +112,13 @@ int	main(int ac, char **av, char **env)
 	{
 		if (ft_strncmp(av[1], "here_doc", 8) == 0)
 			here_doc(ac, av, env);
-		fdin = openfile(av[1], INFILE);
-		dup2(fdin, STDIN);
-		close(fdin);
+		open_file(av, ac);
 		redir(av[2], env);
-		fdout = openfile(av[ac - 1], OUTFILE);
-		dup2(fdout, STDOUT);
-		close(fdout);
 		while (i < ac - 2)
 			redir(av[i++], env);
 		redir2(av[i], env);
+		while (wait(NULL) != -1)
+			continue ;
 	}
 	else
 		input_error("Ex: ./pipex <file1> <cmd1> <cmd2> ... <cmdn> <file2>\n");
