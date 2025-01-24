@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 17:45:51 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:32:12 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,99 +43,77 @@ void	exec(char *cmd, char **env)
 	path = take_path(commands, commands[0], env);
 	if (!path)
 		ft_write(commands, NULL, ": not found", 1);
-	if (execve(path, commands, env) == -1)
-		ft_write(commands, path, ": not found", 1);
+	execve(path, commands, env);
+	ft_write(commands, path, ": not found", 1);
 }
 
-void	redir(char *cmd, char **env)
+void	redir(char *cmd, char **env, int pid, int *pipefd)
 {
-	pid_t	pid;
-	int		pipefd[2];
-
-	if (pipe(pipefd) == -1)
-		failed_pipe();
-	pid = fork();
-	if (pid == -1)
-		failed_fork(pipefd);
+	
 	if (pid == 0)
 	{
 		close(pipefd[0]);
-		if (dup2(pipefd[1], STDOUT) == -1)
-		{
-			perror("error failed dup2");
-			exit(1);
-		}
+		dup2(pipefd[1], STDOUT);
 		close(pipefd[1]);
 		exec(cmd, env);
-		exit(1);
 	}
-	close(pipefd[1]);
-	if (dup2(pipefd[0], STDIN) == -1)
-	{
-		perror("error failed dup2");
-		exit(1);
-	}
-	close(pipefd[0]);
-	waitpid(pid, NULL, 0);
 }
 
-void	redir2(char **cmd, char **env, int *fd)
+void	redir2(char *cmd, char **env, int pid)
 {
-	int	infile;
-
-	infile = openfile(cmd[1], INFILE);
-	if (infile == -1)
-		exit(1);
-	close(fd[0]);
-	dup2(infile, STDIN);
-	dup2(fd[1], STDOUT);
-	close(infile);
-	close(fd[1]);
-	exec(cmd[2], env);
-	exit(1);
-}
-
-void	redir3(char **cmd, char **env, int open)
-{
-	int	outfile;
-
-	outfile = openfile(cmd[open + 1], OUTFILE);
-	if (outfile == -1)
-		exit(1);
-	if (dup2(outfile, STDOUT) == -1)
-	{
-		perror("error failed dup2");
-		exit(1);
-	}
-	close(outfile);
-	exec(cmd[open], env);
-	exit(1);
+	if (pid == 0)
+		exec(cmd, env);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	int		i;
+	int	fdin;
+	int	fdout;
+	int	i;
 	pid_t	pid;
+	int		pipefd[2];
 	pid_t	pid2;
-	int		fd[2];
 
 	i = 3;
 	if (ac >= 5)
 	{
 		if (ft_strncmp(av[1], "here_doc", 8) == 0)
 			here_doc(ac, av, env);
-		if (pipe(fd) == -1)
+
+		if (pipe(pipefd) == -1)
 			failed_pipe();
 		pid = fork();
-		if (pid == 0)
-			redir2(av, env, fd);
-		close(fd[1]);
-		close(fd[0]);
+		if (pid == -1)
+			failed_fork(pipefd);
+
+		fdin = openfile(av[1], INFILE);
+		dup2(fdin, STDIN);
+		close(fdin);
+		redir(av[2], env, pid , pipefd);
 		while (i < ac - 2)
-			redir(av[i++], env);
+		{
+			if (pipe(pipefd) == -1)
+				failed_pipe();
+			pid = fork();
+			if (pid == -1)
+				failed_fork(pipefd);
+			if (pid)
+			{
+				close(pipefd[1]);
+				dup2(pipefd[0], STDIN);
+				close(pipefd[0]);
+				waitpid(pid, NULL, 0);
+			}
+			redir(av[i++], env, pid, pipefd);
+		}
+
 		pid2 = fork();
-		if (pid2 == 0)
-			redir3(av, env, i);
+		fdout = openfile(av[ac - 1], OUTFILE);
+		dup2(fdout, STDOUT);
+		close(fdout);
+		redir2(av[i], env, pid2);
+		close(pipefd[0]);
+		close(pipefd[1]);
 		waitpid(pid, NULL, 0);
 		waitpid(pid2, NULL, 0);
 	}
