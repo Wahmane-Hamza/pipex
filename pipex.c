@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:31:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 21:08:30 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:50:34 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	first_child(int *fd, char **av, char **env)
 	char	*path;
 	int		infile;
 
+	check(av[2]);
 	infile = open(av[1], O_RDONLY);
 	if (infile == -1)
 		open_faild(fd, av[1]);
@@ -37,7 +38,7 @@ void	first_child(int *fd, char **av, char **env)
 	if (!path)
 		ft_write(commands, NULL, ": not found", 1);
 	if (execve(path, commands, env) == -1)
-		ft_write(commands, path, ": No such file or directory", 1);
+		ft_write(commands, path, ": not found", 1);
 }
 
 // SECOND_CHILD
@@ -47,6 +48,7 @@ void	second_child(int *fd, char **av, char **env)
 	char	*path;
 	int		outfile;
 
+	check(av[3]);
 	outfile = open(av[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (outfile == -1)
 		open_faild(fd, NULL);
@@ -65,7 +67,7 @@ void	second_child(int *fd, char **av, char **env)
 	if (!path)
 		ft_write(commands, NULL, ": not found", 1);
 	if (execve(path, commands, env) == -1)
-		ft_write(commands, path, ": No such file or directory", 1);
+		ft_write(commands, path, ": not found", 1);
 }
 
 int	main(int ac, char **av, char **env)

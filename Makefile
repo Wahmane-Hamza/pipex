@@ -1,9 +1,9 @@
 NAME = pipex
 BNAME = pipex_bonus
 
-SRCS = pipex.c commands_help.c commands_help2.c
+SRCS = pipex.c commands_help.c commands_help2.c check.c
 SRCB = pipex_bonus.c commands_help.c commands_help2.c \
-		commands_bonus.c \
+		commands_bonus.c check.c\
 		./get_next_line/get_next_line.c \
 		./get_next_line/get_next_line_utils.c
 

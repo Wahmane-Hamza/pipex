@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_bonus.c                                   :+:      :+:    :+:   */
+/*   commands_help3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:40:18 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 19:56:00 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:51:47 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,4 @@ void	here_doc(int ac, char **av, char **env)
 	else
 		input_error("Ex: ./pipex here_doc LIMITER cmd cmd1 file\n");
 }
+

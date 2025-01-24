@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 21:11:06 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:45:12 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	exec(char *cmd, char **env)
 	char	**commands;
 	char	*path;
 
+	check(cmd);
 	commands = ft_split(cmd, ' ');
 	if (!commands)
 		ft_write(NULL, NULL, "Memory allocation failed", 1);
@@ -43,7 +44,7 @@ void	exec(char *cmd, char **env)
 	if (!path)
 		ft_write(commands, NULL, ": not found", 1);
 	execve(path, commands, env);
-	ft_write(commands, path, ": No such file or directory", 1);
+	ft_write(commands, path, ": not found", 1);
 }
 
 void	redir(char *cmd, char **env)
