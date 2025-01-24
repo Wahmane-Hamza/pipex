@@ -6,11 +6,11 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:51:59 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 14:40:37 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 21:09:21 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 void	check(char *cmd, int *fd)
 {

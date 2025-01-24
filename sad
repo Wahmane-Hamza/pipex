@@ -1,0 +1,16 @@
+check.c
+check.o
+commands_help2.c
+commands_help2.o
+commands_help3.c
+commands_help3.o
+commands_help.c
+commands_help.o
+get_next_line
+libft
+Makefile
+pipex
+pipex.c
+pipex.h
+pipex.o
+sad

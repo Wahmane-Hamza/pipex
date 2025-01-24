@@ -1,42 +1,33 @@
 NAME = pipex
-BNAME = pipex_bonus
 
-SRCS = pipex.c commands_help.c commands_help2.c check.c
-SRCB = pipex_bonus.c commands_help.c commands_help2.c \
-		commands_bonus.c check.c\
+SRCS = pipex.c commands_help.c commands_help2.c \
+		commands_help3.c check.c\
 		./get_next_line/get_next_line.c \
 		./get_next_line/get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)
-OBJSB = $(SRCB:.c=.o)
 
 HEADER = -I.
 DEPS = pipex.h
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
-
-bonus: $(BNAME)
 
 $(NAME): $(OBJS)
 	@make -C libft
 	@$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(NAME)
-
-$(BNAME): $(OBJSB)
-	@make -C libft
-	@$(CC) $(CFLAGS) $(OBJSB) -Llibft -lft -o $(BNAME)
 
 %.o: %.c $(DEPS)
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 clean:
 	@make clean -C libft
-	@rm -f $(OBJS) $(OBJSB)
+	@rm -f $(OBJS)
 
 fclean: clean
 	@make fclean -C libft
-	@rm -rf $(NAME) $(BNAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 

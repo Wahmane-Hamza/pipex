@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_bonus.c                                   :+:      :+:    :+:   */
+/*   commands_help3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:40:18 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 21:02:03 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/24 21:58:42 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 void	close_pipes(int *pipes)
 {
@@ -26,14 +26,10 @@ void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env)
 	close(pipe_fd[1]);
 	dup2(pipe_fd[0], STDIN);
 	close(pipe_fd[0]);
-	fdout = openfile(av[ac - 1], OUTFILE);
-	if (fdout == -1)
-		exit(1);
-	if (dup2(fdout, STDOUT) == -1)
-		exit(1);
-	close(fdout);
 	redir(av[3], env);
-	redir2(av[4], env);
+	fdout = openfile(av[ac - 1], OUTFILE);
+	redir2(av[4], env, fdout);
+	close(fdout);
 	exit(1);
 }
 
@@ -65,21 +61,4 @@ void	here_doc(int ac, char **av, char **env)
 		input_error("Ex: ./pipex here_doc LIMITER cmd cmd1 file\n");
 }
 
-void	open_file(char **av, int ac)
-{
-	int	fdin;
-	int	fdout;
 
-	fdin = openfile(av[1], INFILE);
-	if (fdin == -1)
-		exit(1);
-	if (dup2(fdin, STDIN) == -1)
-		exit(1);
-	close(fdin);
-	fdout = openfile(av[ac - 1], OUTFILE);
-	if (fdout == -1)
-		exit(1);
-	if (dup2(fdout, STDOUT) == -1)
-		exit(1);
-	close(fdout);
-}
