@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/25 12:11:31 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/25 12:39:06 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define OUTFILE 1
 
 // pipex_bonus
-int		openfile(char *filename, int mode);
 void	exec(char *cmd, char **env);
 void	redir(char *cmd, char **env);
 void	redir2(char *cmd, char **env, int fdout);
@@ -49,9 +48,10 @@ void	ft_free(char **get_free);
 void	check_arg(char *av, char **commands, char **env);
 void	ft_write(char **commands, char *path, char *signal, int ft_exit);
 
-// commands_bonus
+// commands_help3
 void	here_doc(int ac, char **av, char **env);
 void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env);
+int		openfile(char *filename, int mode);
 
 //check
 void	check(char *cmd, int *fd);
