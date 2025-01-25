@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 21:53:03 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:25:14 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	openfile(char *filename, int mode)
 {
-	int fd;
+	int	fd;
 
 	if (mode == INFILE)
 	{
@@ -69,13 +69,15 @@ void	redir(char *cmd, char **env)
 	if (pid)
 	{
 		close(pipefd[1]);
-		dup2(pipefd[0], STDIN);
+		if (dup2(pipefd[0], STDIN) == -1)
+			exit(1);
 		close(pipefd[0]);
 	}
 	else
 	{
 		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT);
+		if (dup2(pipefd[1], STDOUT) == -1)
+			exit(1);
 		close(pipefd[1]);
 		exec(cmd, env);
 	}
@@ -91,27 +93,28 @@ void	redir2(char *cmd, char **env, int fdout)
 	pid = fork();
 	if (pid == -1)
 		failed_fork(pipefd);
-	if (pid)
-	{
-		close(pipefd[1]);
-		dup2(pipefd[0], STDIN);
-		close(pipefd[0]);
-	}
-	else
+	if (pid == 0)
 	{
 		close(pipefd[0]);
 		if (fdout == -1)
-			dup2(pipefd[1], STDOUT);
+			if (dup2(pipefd[1], STDOUT) == -1)
+				exit(1);
 		close(pipefd[1]);
+		if (fdout != -1)
+			close(fdout);
 		exec(cmd, env);
 	}
+	close(pipefd[1]);
+	if (dup2(pipefd[0], STDIN) == -1)
+		exit(1);
+	close(pipefd[0]);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	int	i;
-	int fdout;
-	int fdin;
+	int	fdout;
+	int	fdin;
 
 	i = 3;
 	if (ac >= 5)
@@ -119,12 +122,15 @@ int	main(int ac, char **av, char **env)
 		if (ft_strncmp(av[1], "here_doc", 8) == 0)
 			here_doc(ac, av, env);
 		fdin = openfile(av[1], INFILE);
+		if (fdin != -1)
+			close(fdin);
 		redir(av[2], env);
-		close(fdin);
 		while (i < ac - 2)
 			redir(av[i++], env);
 		fdout = openfile(av[ac - 1], OUTFILE);
 		redir2(av[i], env, fdout);
+		if (fdout != -1)
+			close(fdout);
 		while (wait(NULL) != -1)
 			continue ;
 	}

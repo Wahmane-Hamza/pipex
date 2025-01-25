@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:40:18 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 21:58:42 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:16:41 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,3 @@ void	here_doc(int ac, char **av, char **env)
 	else
 		input_error("Ex: ./pipex here_doc LIMITER cmd cmd1 file\n");
 }
-
-
