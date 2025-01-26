@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:40:18 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/26 17:01:00 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/26 18:48:18 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ int	openfile(char *filename, int mode)
 		if (access(filename, F_OK | W_OK))
 		{
 			write(2, strerror(errno), ft_strlen(strerror(errno)));
-			write(2, ": ", 2);
-			write(2, filename, ft_strlen(filename));
-			write(2, "\n", 1);
+			open_write(filename);
 		}
 		return (open(filename, O_RDONLY));
 	}
@@ -84,15 +82,13 @@ int	openfile(char *filename, int mode)
 		if (access(filename, W_OK) == -1)
 		{
 			write(2, strerror(errno), ft_strlen(strerror(errno)));
-			write(2, ": ", 2);
-			write(2, filename, ft_strlen(filename));
-			write(2, "\n", 1);
+			open_write(filename);
 		}
 		return (fd);
 	}
 }
 
-int	wait_child(t_data data)
+int	wait_child(t_data data, int fdout)
 {
 	int	status;
 
@@ -102,5 +98,7 @@ int	wait_child(t_data data)
 		if (WIFEXITED(status))
 			data.exit_num = WEXITSTATUS(status);
 	}
+	if (fdout == -1)
+		data.exit_num = 1;
 	return (data.exit_num);
 }
