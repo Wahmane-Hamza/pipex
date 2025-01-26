@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:40:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/23 20:54:46 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:31:36 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*take_path(char **commands, char *command, char **env)
 	while (env[++i] && ft_strnstr(env[i], "PATH", 4) == 0)
 		;
 	if (!env[i])
-		ft_write(commands, NULL, ": not found", 1);
+		ft_write(commands, NULL, ": not found", 127);
 	paths = ft_split(env[i] + 5, ':');
 	if (!paths)
 		return (NULL);
@@ -83,14 +83,16 @@ void	check_arg(char *av, char **commands, char **env)
 	{
 		if (execve(commands[0], commands, env) == -1)
 		{
-			ft_write(commands, NULL, ": not found", 1);
+			write(2, strerror(errno), ft_strlen(strerror(errno)));
+			write(2, ": ", 2);
+			ft_write(commands, NULL, NULL, 127);
 		}
 	}
 	i = 1;
 	while (av[i])
 	{
 		if (av[i] == '/')
-			ft_write(commands, NULL, ": not found", 1);
+			ft_write(commands, NULL, ": not found", 127);
 		i++;
 	}
 }
@@ -99,14 +101,15 @@ void	ft_write(char **commands, char *path, char *signal, int ft_exit)
 {
 	if (*commands)
 		write(2, commands[0], ft_strlen(commands[0]));
-	write(2, signal, ft_strlen(signal));
+	if (signal)
+		write(2, signal, ft_strlen(signal));
 	write(2, "\n", 1);
-	if (ft_exit == 1)
+	if (ft_exit)
 	{
 		if (commands)
 			ft_free(commands);
 		if (path)
 			free(path);
-		exit(1);
+		exit(127);
 	}
 }
