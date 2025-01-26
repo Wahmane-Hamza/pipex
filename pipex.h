@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/25 12:39:06 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/25 15:32:48 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+typedef struct l_data
+{
+    int exit_num;
+}   t_data;
 
 # define STDIN STDIN_FILENO
 # define STDOUT STDOUT_FILENO
@@ -52,6 +57,7 @@ void	ft_write(char **commands, char *path, char *signal, int ft_exit);
 void	here_doc(int ac, char **av, char **env);
 void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env);
 int		openfile(char *filename, int mode);
+int    wait_child(t_data data);
 
 //check
 void	check(char *cmd, int *fd);
