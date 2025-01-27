@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:52:30 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/13 17:07:40 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:54:46 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 void	ft_putstr_fd(char *s, int fd);
+char	*ft_itoa(int n);
 
 #endif
