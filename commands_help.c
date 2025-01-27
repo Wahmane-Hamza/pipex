@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:39:01 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/26 17:21:41 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:44:21 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@ void	input_error(char *arg_ex)
 	exit(127);
 }
 
-void	open_write(char *filename)
+void	open_write(char *filename, char *stre)
 {
+	write(2, stre, ft_strlen(stre));
 	write(2, ": ", 2);
 	write(2, filename, ft_strlen(filename));
 	write(2, "\n", 1);
 }
 
-void	close_open(int open, int fd)
+void	close_open(int fd)
 {
-	if (open != -1)
+	if (fd != -1)
 		close(fd);
 }

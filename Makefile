@@ -1,7 +1,7 @@
 NAME = pipex
 
 SRCS = pipex.c commands_help.c commands_help2.c \
-		commands_help3.c check.c\
+		commands_help3.c commands_help4.c\
 		./get_next_line/get_next_line.c \
 		./get_next_line/get_next_line_utils.c
 
@@ -10,7 +10,7 @@ OBJS = $(SRCS:.c=.o)
 HEADER = -I.
 DEPS = pipex.h
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 all: $(NAME)
 
@@ -19,7 +19,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -o $(NAME)
 
 %.o: %.c $(DEPS)
-	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+	$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 clean:
 	@make clean -C libft

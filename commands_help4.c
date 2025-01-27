@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   commands_help4.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:51:59 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/24 21:09:21 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:00:46 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,19 @@ void	check(char *cmd, int *fd)
 		}
 		exit(1);
 	}
+}
+
+char	*ft_getrandtmp_file(void)
+{
+	char	*tmpfile;
+	char	*tmp;
+
+	tmp = ft_itoa((unsigned long)(&tmpfile));
+	if (!tmp)
+		return (NULL);
+	tmpfile = ft_strjoin("/tmp/pipex_hamza_", tmp);
+	if (!tmpfile)
+		return (NULL);
+	free(tmp);
+	return (tmpfile);
 }

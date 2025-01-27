@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:29:50 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/26 18:13:48 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:59:05 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	redir3(char *cmd, char **env, int fdin);
 void	failed_fork(int *fd);
 void	failed_pipe(void);
 void	input_error(char *arg_ex);
-void	close_open(int open, int fd);
-void	open_write(char *filename);
+void	close_open(int fd);
+void	open_write(char *filename, char *stre);
 
 // commands_help2
 char	*get_path(char **paths, char *command);
@@ -58,12 +58,13 @@ void	ft_write(char **commands, char *path, char *signal, int ft_exit);
 
 // commands_help3
 void	here_doc(int ac, char **av, char **env);
-void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env);
+void	redir_here_doc(char **av, char **env, char *tmpfile);
 int		openfile(char *filename, int mode);
 int		wait_child(t_data data, int fdout);
-void	close_pipes(int *pipes);
+void	close_fd(int fd, char *tmpfile, int ex);
 
-//check
+// commands_help4
 void	check(char *cmd, int *fd);
+char	*ft_getrandtmp_file(void);
 
 #endif

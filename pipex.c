@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/27 13:27:38 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:36:45 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	redir2(char *cmd, char **env, int fdout)
 		if (fdout != -1)
 			if (dup2(fdout, STDOUT) == -1)
 				exit(1);
-		close_open(fdout, fdout);
+		close_open(fdout);
 		if (fdout == -1)
 			if (dup2(pipefd[1], STDOUT) == -1)
 				exit(1);
@@ -106,6 +106,7 @@ void	redir3(char *cmd, char **env, int fdin)
 		close(fdin);
 		exec(cmd, env);
 	}
+	close(fdin);
 	close(pipefd[1]);
 	if (dup2(pipefd[0], STDIN) == -1)
 		exit(1);
@@ -126,12 +127,12 @@ int	main(int ac, char **av, char **env)
 			here_doc(ac, av, env);
 		fdin = openfile(av[1], INFILE);
 		redir3(av[2], env, fdin);
-		close_open(fdin, fdin);
+		close_open(fdin);
 		while (i < ac - 2)
 			redir(av[i++], env);
 		fdout = openfile(av[ac - 1], OUTFILE);
 		redir2(av[i], env, fdout);
-		close_open(fdout, fdout);
+		close_open(fdout);
 		data.exit_num = wait_child(data, fdout);
 		exit(data.exit_num);
 	}

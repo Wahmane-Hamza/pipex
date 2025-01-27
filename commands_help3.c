@@ -6,56 +6,62 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:40:18 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/26 18:48:18 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:59:51 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	close_pipes(int *pipes)
+void	close_fd(int fd, char *tmpfile, int ex)
 {
-	close(pipes[0]);
-	close(pipes[1]);
-	exit(127);
+	free(tmpfile);
+	close(fd);
+	if (ex == 1)
+		exit(127);
 }
 
-void	redir_here_doc(int *pipe_fd, char **av, int ac, char **env)
+void	redir_here_doc(char **av, char **env, char *tmpfile)
 {
-	int	fdout;
+	int		fdout;
+	t_data	data;
+	int		fd;
 
-	close(pipe_fd[1]);
-	dup2(pipe_fd[0], STDIN);
-	close(pipe_fd[0]);
-	redir(av[3], env);
-	fdout = openfile(av[ac - 1], OUTFILE);
+	fd = openfile(tmpfile, INFILE);
+	redir3(av[3], env, fd);
+	unlink(tmpfile);
+	free(tmpfile);
+	close_open(fd);
+	fdout = openfile(av[5], 2);
 	redir2(av[4], env, fdout);
-	close(fdout);
-	exit(127);
+	close_open(fdout);
+	data.exit_num = wait_child(data, fdout);
+	exit(data.exit_num);
 }
 
 void	here_doc(int ac, char **av, char **env)
 {
-	int		pipe_fd[2];
+	int		fd;
 	char	*line;
+	char	*tmpfile;
 
 	if (ac == 6)
 	{
-		if (pipe(pipe_fd) == -1)
-			failed_pipe();
+		tmpfile = ft_getrandtmp_file();
+		fd = open(tmpfile, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 		while (1)
 		{
 			write(1, ">", 1);
 			line = get_next_line(0);
 			if (!line)
-				close_pipes(pipe_fd);
+				close_fd(fd, tmpfile, 1);
 			if (ft_strncmp(line, av[2], ft_strlen(av[2])) == 0
 				&& line[ft_strlen(av[2])] == '\n')
 				break ;
-			write(pipe_fd[1], line, ft_strlen(line));
+			write(fd, line, ft_strlen(line));
 			free(line);
 		}
-		free(line);
-		redir_here_doc(pipe_fd, av, ac, env);
+		close_fd(fd, line, 0);
+		redir_here_doc(av, env, tmpfile);
 	}
 	else
 		input_error("Ex: ./pipex here_doc LIMITER cmd cmd1 file\n");
@@ -70,20 +76,17 @@ int	openfile(char *filename, int mode)
 		if (filename[0] == '/' && filename[1] == '\0')
 			return (open(filename, O_RDONLY));
 		if (access(filename, F_OK | W_OK))
-		{
-			write(2, strerror(errno), ft_strlen(strerror(errno)));
-			open_write(filename);
-		}
+			open_write(filename, strerror(errno));
 		return (open(filename, O_RDONLY));
 	}
 	else
 	{
-		fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (mode == 2)
+			fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		else
+			fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (access(filename, W_OK) == -1)
-		{
-			write(2, strerror(errno), ft_strlen(strerror(errno)));
-			open_write(filename);
-		}
+			open_write(filename, strerror(errno));
 		return (fd);
 	}
 }
