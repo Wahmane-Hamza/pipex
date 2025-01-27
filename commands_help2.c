@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:40:22 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/26 17:15:57 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:19:29 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,8 @@ void	ft_free(char **get_free)
 
 void	check_arg(char *av, char **commands, char **env)
 {
-	int	i;
-
-	if (ft_strncmp(av, "./", 2) == 0 || ft_strncmp(av, "../", 3) == 0
-		|| ft_strncmp(av, "/", 1) == 0)
+	(void)av;
+	if (ft_strchr(commands[0], '/'))
 	{
 		if (execve(commands[0], commands, env) == -1)
 		{
@@ -87,13 +85,6 @@ void	check_arg(char *av, char **commands, char **env)
 			write(2, ": ", 2);
 			ft_write(commands, NULL, NULL, 127);
 		}
-	}
-	i = 1;
-	while (av[i])
-	{
-		if (av[i] == '/')
-			ft_write(commands, NULL, ": not found", 127);
-		i++;
 	}
 }
 
