@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/26 18:09:49 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:27:38 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	main(int ac, char **av, char **env)
 	i = 3;
 	if (ac >= 5)
 	{
-		if (ft_strncmp(av[1], "here_doc", 8) == 0)
+		if (ft_strncmp(av[1], "here_doc", ft_strlen(av[1])) == 0)
 			here_doc(ac, av, env);
 		fdin = openfile(av[1], INFILE);
 		redir3(av[2], env, fdin);
