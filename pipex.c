@@ -6,7 +6,7 @@
 /*   By: hwahmane <hwahmane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:54:56 by hwahmane          #+#    #+#             */
-/*   Updated: 2025/01/27 15:36:45 by hwahmane         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:08:00 by hwahmane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	redir3(char *cmd, char **env, int fdin)
 		close(fdin);
 		exec(cmd, env);
 	}
-	close(fdin);
 	close(pipefd[1]);
 	if (dup2(pipefd[0], STDIN) == -1)
 		exit(1);
