@@ -12,6 +12,7 @@
 
 #include "pipex.h"
 
+
 void	exec(char *cmd, char **env)
 {
 	char	**commands;
