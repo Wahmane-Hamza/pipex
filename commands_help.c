@@ -12,6 +12,7 @@
 
 #include "pipex.h"
 
+
 void	failed_fork(int *fd)
 {
 	perror("error");
